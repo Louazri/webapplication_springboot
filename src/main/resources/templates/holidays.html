@@ -45,10 +45,10 @@ Author URL: http://w3layouts.com
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <h5 class="sub-title-timeline"><i class="fas fa-snowman"></i> Festival Holidays</h5>
+                    <h5 class="sub-title-timeline"><i class="fas fa-snowman"></i> Religious Holidays</h5>
                     <div class="timeline">
                         <div class="timeline">
-                            <div th:each="holiday : ${FESTIVAL}" class="column">
+                            <div th:each="holiday : ${RELIGIOUS}" class="column">
                                 <div class="title">
                                     <h2 th:text="${holiday.reason}"></h2>
                                 </div>
@@ -61,9 +61,9 @@ Author URL: http://w3layouts.com
                 </div>
 
                 <div class="col-lg-6 mt-lg-0 mt-4">
-                    <h5 class="sub-title-timeline"><i class="fas fa-flag-usa"></i> Federal Holidays </h5>
+                    <h5 class="sub-title-timeline"><i class="fas fa-flag-usa"></i> National Holidays </h5>
                     <div class="timeline">
-                        <div th:each="holiday : ${FEDERAL}" class="column">
+                        <div th:each="holiday : ${NATIONAL}" class="column">
                             <div class="title">
                                 <h2 th:text="${holiday.reason}"></h2>
                             </div>
