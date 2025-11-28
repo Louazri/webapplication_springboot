@@ -1,63 +1,56 @@
 package com.louazri.webapplication.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+/*
+@data annotation is provided by lombok library which generates getter , setter , eauls(),hashCode(),toString() methods
+& Constructor at compile time . this makes our code short and clean .
+ */
+
+@Data
 public class Contact {
+   @NotBlank(message = "Name must not be blank")
+    @Size(min = 3 , message = "Name must be at least 3 characters long")
     private String name;
-    private String email;
+
+   @NotBlank(message = "Mobile number must not be blank")
+    @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
     private String mobileNum;
+
+   @NotBlank(message = "Mobile number must not be blank")
+    @Email(message = "please provide a valid email address")
+    private String email;
+
+   @NotBlank(message = "Subject must not be blank")
+    @Size(min = 5 ,message = "Subject  must be at least 5 charachters long")
     private String subject;
+
+   @NotBlank(message = "Message must not be blank")
+    @Size(min = 10, message = "Message must be al least 10 characters long")
     private String message;
 
 
 
 
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", mobileNum='" + mobileNum + '\'' +
-                ", subject='" + subject + '\'' +
-                ", message='" + message + '\'' +
-                '}';
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getSubject() {
-        return subject;
-    }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
-    public String getMobileNum() {
-        return mobileNum;
-    }
 
-    public void setMobileNum(String mobileNum) {
-        this.mobileNum = mobileNum;
-    }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
+
+
+
+
+
+
 }

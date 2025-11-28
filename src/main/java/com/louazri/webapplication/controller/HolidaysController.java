@@ -4,6 +4,8 @@ import org.springframework.ui.Model;
 import com.louazri.webapplication.model.Holiday;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +14,10 @@ import java.util.stream.Collectors;
 public class HolidaysController {
 
     @GetMapping("/holidays")
-    public String displayHolidays(Model model) {
+    public String displayHolidays(@RequestParam(required = false) boolean national ,
+                                  @RequestParam(required = false) boolean religious, Model model) {
+        model.addAttribute("national", national);
+        model.addAttribute("religious", religious);
         List<Holiday> holidays = List.of(
                 new Holiday("Jan 1", "New Year's Day", Holiday.Type.NATIONAL),
                 new Holiday("Jan 11", "Proclamation of Independence", Holiday.Type.NATIONAL),
