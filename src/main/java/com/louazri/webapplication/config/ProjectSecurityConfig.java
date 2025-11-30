@@ -29,7 +29,7 @@ public class ProjectSecurityConfig {
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/logout?logout=true")
+                        .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true) // MANDATORY: Explicitly clear the SecurityContext
                         .deleteCookies("JSESSIONID") // Delete the standard session cookie
