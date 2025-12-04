@@ -17,7 +17,7 @@ public class ProjectSecurityConfig {
         //  permitAll() do permit all requests inside the web application
         // denyAll() do deny all requests inside the web application
 
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.requestMatchers("/","/home" , "/login" , "/holidays" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**")
                                 .permitAll()
@@ -31,8 +31,6 @@ public class ProjectSecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
-                        .clearAuthentication(true) // MANDATORY: Explicitly clear the SecurityContext
-                        .deleteCookies("JSESSIONID") // Delete the standard session cookie
                         .permitAll())
                 .httpBasic(httpBasicAuth -> {});
 
