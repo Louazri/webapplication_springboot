@@ -3,6 +3,7 @@ package com.louazri.webapplication.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -17,11 +18,14 @@ public class ProjectSecurityConfig {
         //  permitAll() do permit all requests inside the web application
         // denyAll() do deny all requests inside the web application
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg")
+                        .ignoringRequestMatchers("/h2-console/**"))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/","/home" , "/login" , "/holidays" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**")
+                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" )
                                 .permitAll()
                                 .requestMatchers("/dashboard").authenticated()
+                                .requestMatchers("/h2-console/**").permitAll()
                                 .anyRequest().authenticated() )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
