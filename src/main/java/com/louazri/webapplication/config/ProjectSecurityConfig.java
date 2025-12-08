@@ -43,15 +43,15 @@ public class ProjectSecurityConfig {
    @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         UserDetails user = User.withDefaultPasswordEncoder()
-                .username("oussama")
-                .password("louazri")
+                .username("user")
+                .password("user")
                 .roles("USER")
                 .build();
 
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("admin")
-                .roles("USER" , "ADMIN")
+                .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user , admin);
     }

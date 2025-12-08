@@ -5,14 +5,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /*
 @data annotation is provided by lombok library which generates getter , setter , eauls(),hashCode(),toString() methods
 & Constructor at compile time . this makes our code short and clean .
  */
-
+@Slf4j
 @Data
-public class Contact {
+public class Contact extends BaseEntity {
+
+    private int contactId;
+
    @NotBlank(message = "Name must not be blank")
     @Size(min = 3 , message = "Name must be at least 3 characters long")
     private String name;
@@ -33,24 +37,6 @@ public class Contact {
     @Size(min = 10, message = "Message must be al least 10 characters long")
     private String message;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   private String status;
 
 }

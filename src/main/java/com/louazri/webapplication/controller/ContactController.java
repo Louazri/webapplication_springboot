@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Slf4j
 @Controller
@@ -32,6 +34,7 @@ public class ContactController {
         module.addAttribute("contact" , new Contact());
         return "contact";
     }
+
     @RequestMapping(value = "/saveMsg" , method = POST )
     public String saveMessage(@Valid @ModelAttribute("contact") Contact contact , Errors errors) {
         if (errors.hasErrors()) {
@@ -40,6 +43,14 @@ public class ContactController {
         }
         contactService.saveMessageDetail(contact);
         return "redirect:/contact";
+    }
+
+    @RequestMapping("/displayMessages")
+    public ModelAndView displayMessages(Model model) {
+        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
+        ModelAndView modelAndView = new ModelAndView("messages.html");
+        modelAndView.addObject("contactMsgs",contactMsgs);
+        return modelAndView;
     }
 
 
