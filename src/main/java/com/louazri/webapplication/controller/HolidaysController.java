@@ -29,6 +29,7 @@ public class HolidaysController {
                 new Holiday("Nov 6", "Green March", Holiday.Type.NATIONAL),
                 new Holiday("Nov 18", "Independence Day", Holiday.Type.NATIONAL),
 
+
                 // Islamic Holidays (floating dates)
                 new Holiday("Variable", "Eid al-Fitr", Holiday.Type.RELIGIOUS),
                 new Holiday("Variable", "Eid al-Adha", Holiday.Type.RELIGIOUS),
