@@ -29,7 +29,7 @@ public class ContactService {
         boolean isSaved = false;
         contact.setStatus(WebappConstants.OPEN);
         contact.setCreatedBy(WebappConstants.ANONYMOUS);
-        contact.setCreatedAT(LocalDateTime.now());
+        contact.setCreatedAt(LocalDateTime.now());
         int result = contactRepository.saveContactMsg(contact);
         if (result > 0) {
             isSaved = true;

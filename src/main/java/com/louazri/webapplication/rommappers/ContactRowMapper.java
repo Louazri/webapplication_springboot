@@ -19,11 +19,11 @@ public class ContactRowMapper implements RowMapper<Contact> {
         contact.setSubject(rs.getString("SUBJECT"));
         contact.setMessage(rs.getString("MESSAGE"));
         contact.setStatus(rs.getString("STATUS"));
-        contact.setCreatedAT(rs.getTimestamp("CREATED_AT").toLocalDateTime());
+        contact.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
         contact.setCreatedBy(rs.getString("CREATED_BY"));
 
         if(null!=rs.getTimestamp("UPDATED_AT")){
-            contact.setUpdatedAT(rs.getTimestamp("UPDATED_AT").toLocalDateTime());
+            contact.setUpdatedAt(rs.getTimestamp("UPDATED_AT").toLocalDateTime());
         }
         contact.setUpdatedBy(rs.getString("UPDATED_BY"));
         return contact;

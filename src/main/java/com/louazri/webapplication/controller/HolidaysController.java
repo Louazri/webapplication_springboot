@@ -1,11 +1,12 @@
 package com.louazri.webapplication.controller;
 
+import com.louazri.webapplication.repository.HolidayRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import com.louazri.webapplication.model.Holiday;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,39 +14,30 @@ import java.util.stream.Collectors;
 @Controller
 public class HolidaysController {
 
-    @GetMapping("/holidays")
-    public String displayHolidays(@RequestParam(required = false) boolean national ,
-                                  @RequestParam(required = false) boolean religious, Model model) {
-        model.addAttribute("national", national);
-        model.addAttribute("religious", religious);
-        List<Holiday> holidays = List.of(
-                new Holiday("Jan 1", "New Year's Day", Holiday.Type.NATIONAL),
-                new Holiday("Jan 11", "Proclamation of Independence", Holiday.Type.NATIONAL),
-                new Holiday("May 1", "Labour Day", Holiday.Type.NATIONAL),
-                new Holiday("Jul 30", "Throne Day", Holiday.Type.NATIONAL),
-                new Holiday("Aug 14", "Oued Ed-Dahab Day", Holiday.Type.NATIONAL),
-                new Holiday("Aug 20", "Revolution of the King and the People", Holiday.Type.NATIONAL),
-                new Holiday("Aug 21", "Youth Day", Holiday.Type.NATIONAL),
-                new Holiday("Nov 6", "Green March", Holiday.Type.NATIONAL),
-                new Holiday("Nov 18", "Independence Day", Holiday.Type.NATIONAL),
+    @Autowired
+    private HolidayRepository holidayRepository;
 
+    @GetMapping("/holidays/{display}")
+    public String displayHolidays(@PathVariable String display, Model model) {
+        List<Holiday> holidays = holidayRepository.findAllHolidays();
 
-                // Islamic Holidays (floating dates)
-                new Holiday("Variable", "Eid al-Fitr", Holiday.Type.RELIGIOUS),
-                new Holiday("Variable", "Eid al-Adha", Holiday.Type.RELIGIOUS),
-                new Holiday("Variable", "Aashura", Holiday.Type.RELIGIOUS),
-                new Holiday("Variable", "Mawlid (Prophet's Birthday)", Holiday.Type.RELIGIOUS)
-        );
-        Holiday.Type[] types = Holiday.Type.values();
-        for(Holiday.Type type : types) {
-            model.addAttribute(
-                    type.toString(),
-                    holidays.stream()
-                            .filter(holiday -> holiday.getType().equals(type))
-                            .collect(Collectors.toList())
-            );
+        List<Holiday> national = holidays.stream()
+                .filter(h -> h.getType() == Holiday.Type.NATIONAL)
+                .collect(Collectors.toList());
 
+        List<Holiday> religious = holidays.stream()
+                .filter(h -> h.getType() == Holiday.Type.RELIGIOUS)
+                .collect(Collectors.toList());
+
+        if ("all".equalsIgnoreCase(display)) {
+            model.addAttribute("NATIONAL", national);
+            model.addAttribute("RELIGIOUS", religious);
+        } else if ("NATIONAL".equalsIgnoreCase(display)) {
+            model.addAttribute("NATIONAL", national);
+        } else if ("RELIGIOUS".equalsIgnoreCase(display)) {
+            model.addAttribute("RELIGIOUS", religious);
         }
+
         return "holidays";
     }
 }

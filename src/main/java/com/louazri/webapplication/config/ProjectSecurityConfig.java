@@ -22,7 +22,7 @@ public class ProjectSecurityConfig {
                         .ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" )
+                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" )
                                 .permitAll()
                                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
