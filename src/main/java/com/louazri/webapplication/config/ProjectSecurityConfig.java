@@ -18,8 +18,7 @@ public class ProjectSecurityConfig {
         //  permitAll() do permit all requests inside the web application
         // denyAll() do deny all requests inside the web application
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg")
-                        .ignoringRequestMatchers("/h2-console/**"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" )
@@ -27,7 +26,6 @@ public class ProjectSecurityConfig {
                                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/dashboard").authenticated()
-                                .requestMatchers("/h2-console/**").permitAll()
                                 .anyRequest().authenticated() )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
@@ -37,8 +35,7 @@ public class ProjectSecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
-                        .permitAll())
-                .httpBasic(httpBasicAuth -> {});
+                        .permitAll());
 
         return http.build();
     }
