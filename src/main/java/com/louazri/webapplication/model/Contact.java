@@ -1,11 +1,13 @@
 package com.louazri.webapplication.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.GenericGenerator;
 
 /*
 @data annotation is provided by lombok library which generates getter , setter , eauls(),hashCode(),toString() methods
@@ -13,8 +15,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
+@Entity
+@Table(name = "contact_msg")
 public class Contact extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     private int contactId;
 
    @NotBlank(message = "Name must not be blank")
