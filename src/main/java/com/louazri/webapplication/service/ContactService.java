@@ -4,12 +4,10 @@ package com.louazri.webapplication.service;
 import com.louazri.webapplication.constants.WebappConstants;
 import com.louazri.webapplication.model.Contact;
 import com.louazri.webapplication.repository.ContactRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -21,9 +19,6 @@ public class ContactService {
 
     public boolean saveMessageDetail(Contact contact) {
         contact.setStatus(WebappConstants.OPEN);
-        contact.setCreatedBy(WebappConstants.ANONYMOUS);
-        contact.setCreatedAt(LocalDateTime.now());
-
         return contactRepository.save(contact).getContactId() > 0;
     }
 
@@ -32,13 +27,18 @@ public class ContactService {
 
     }
 
-    public boolean updateMsgStatus(int contactId , String updatedBy){
-      return contactRepository.updateMsgStatus(
-                contactId,
-                WebappConstants.CLOSED,
-                updatedBy
-      ) > 0;
+
+    @Transactional
+    public boolean updateMsgStatus(int contactId) {
+
+        return contactRepository.findById(contactId)
+                .map(contact -> {
+                    contact.setStatus(WebappConstants.CLOSED);
+                    return true;
+                })
+                .orElse(false);
     }
+
 
 }
 
