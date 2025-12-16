@@ -18,24 +18,28 @@ public class ProjectSecurityConfig {
         //  permitAll() do permit all requests inside the web application
         // denyAll() do deny all requests inside the web application
 
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg")
+                        .ignoringRequestMatchers("/public/**"))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" )
+                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**"  )
                                 .permitAll()
+                                .requestMatchers("/public/register").permitAll()
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/dashboard").authenticated()
                                 .anyRequest().authenticated() )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard")
+                        .defaultSuccessUrl("/dashboard" , true)
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .permitAll());
+
 
         return http.build();
     }
