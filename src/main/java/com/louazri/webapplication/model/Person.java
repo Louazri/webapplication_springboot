@@ -29,8 +29,8 @@ import lombok.EqualsAndHashCode;
 
 public class Person extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    private String personId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int personId;
 
     @NotBlank(message = "Name must not be blank")
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
@@ -58,4 +58,12 @@ public class Person extends BaseEntity {
     @Size(min = 5, message = "Confirm Password must be at least 5 characters long")
     @Transient
     private String confirmPwd;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST , targetEntity =  Roles.class)
+    @JoinColumn(name = "role_id", referencedColumnName = "roleId" , nullable = false)
+    private Roles roles;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL , targetEntity =  Address.class)
+    @JoinColumn(name = "address_id", referencedColumnName = "addressId" , nullable = true)
+    private Address address;
 }

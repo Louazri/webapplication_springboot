@@ -22,10 +22,8 @@ public class ProjectSecurityConfig {
                         .ignoringRequestMatchers("/public/**"))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**"  )
+                        authorizeRequests.requestMatchers("/","/home" , "/login" ,"/logout" , "/holidays/**" , "/contact" , "/saveMsg" , "/courses" , "/about" , "/assets/**" , "/public/**" )
                                 .permitAll()
-                                .requestMatchers("/public/register").permitAll()
-                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/dashboard").authenticated()

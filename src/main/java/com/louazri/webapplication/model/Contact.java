@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Contact extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int contactId;
 
    @NotBlank(message = "Name must not be blank")
