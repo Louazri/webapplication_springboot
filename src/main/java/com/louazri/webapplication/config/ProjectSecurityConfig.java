@@ -41,19 +41,5 @@ public class ProjectSecurityConfig {
 
         return http.build();
     }
-   @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("user")
-                .roles("USER")
-                .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user , admin);
-    }
 }
