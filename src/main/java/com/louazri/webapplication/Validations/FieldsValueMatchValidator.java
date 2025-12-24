@@ -16,15 +16,23 @@ public class FieldsValueMatchValidator
         this.fieldMatch = constraintAnnotation.fieldMatch();
     }
 
-    public boolean isValid(Object value , ConstraintValidatorContext context) {
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+
         Object fieldValue = new BeanWrapperImpl(value).getPropertyValue(field);
         Object fieldMatchValue = new BeanWrapperImpl(value).getPropertyValue(fieldMatch);
-        if (fieldValue != null) {
-            return fieldValue.equals(fieldMatchValue);
-        } else {
-            return fieldMatchValue == null;
+
+        // 1️⃣ If either field is null → invalid
+        if (fieldValue == null || fieldMatchValue == null) {
+            return false;
         }
+
+        // 2️⃣ If already encrypted (update case)
+        if (fieldValue.toString().startsWith("$2a$")) {
+            return true;
+        }
+
+        // 3️⃣ Compare both fields
+        return fieldValue.equals(fieldMatchValue);
     }
-
-
 }

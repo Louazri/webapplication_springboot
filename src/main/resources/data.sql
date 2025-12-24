@@ -47,5 +47,5 @@ VALUES ('STUDENT', CURDATE(), 'DBA');
 
 
 
-INSERT INTO `person` (`name`,`email` ,`mobile_number`, `pd`,`role_id`, `created_at`, `created_by`)
-VALUES ('Admin', `admin@gmail.com` , `0600000000` ,`Admin@+#1` , 1, CURDATE(), 'DBA');
+INSERT INTO `person` (`name`, `email`, `mobile_number`, `pwd`, `role_id`, `created_at`, `created_by`)
+VALUES ('Admin', 'admin@gmail.com', '0600000000', 'Admin@+#1', 1, CURDATE(), 'DBA');
