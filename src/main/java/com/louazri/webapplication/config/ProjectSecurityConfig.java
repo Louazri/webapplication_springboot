@@ -28,6 +28,8 @@ public class ProjectSecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/displayMessages").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                                .requestMatchers("/displayProfile").authenticated()
+                                .requestMatchers("/updateProfile").authenticated()
                                 .requestMatchers("/dashboard").authenticated()
                                 .anyRequest().authenticated() )
                 .formLogin(formLogin -> formLogin
